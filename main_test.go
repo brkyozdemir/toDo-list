@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/toDo-list/internal/handlers"
+	"github.com/toDo-list/internal/models"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 )
 
@@ -39,7 +42,7 @@ func TestGetTodoListRoute(t *testing.T) {
 		t.Fatalf("Expected no error, got %v", err)
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		t.Fatalf("Expected status code 200, got %v", resp.StatusCode)
 	}
 
@@ -51,6 +54,23 @@ func TestGetTodoListRoute(t *testing.T) {
 
 	if val[0] != "application/json; charset=utf-8" {
 		t.Fatalf("Expected \"application/json; charset=utf-8\", got %s", val[0])
+	}
+
+	if resp.StatusCode == http.StatusOK {
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		var todoModelArray []models.Todo
+		err = json.Unmarshal(bodyBytes, &todoModelArray)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if reflect.TypeOf(todoModelArray) != reflect.TypeOf([]models.Todo{}) {
+			t.Fatalf("Expected %s, got %s", reflect.TypeOf([]models.Todo{}), reflect.TypeOf(todoModelArray))
+		}
 	}
 }
 
@@ -71,7 +91,7 @@ func TestCreateTodoRoute(t *testing.T) {
 		t.Fatalf("Expected no error, got %v", err)
 	}
 
-	if resp.StatusCode != 201 {
+	if resp.StatusCode != http.StatusCreated {
 		t.Fatalf("Expected status code 201, got %v", resp.StatusCode)
 	}
 
@@ -83,5 +103,22 @@ func TestCreateTodoRoute(t *testing.T) {
 
 	if val[0] != "application/json; charset=utf-8" {
 		t.Fatalf("Expected \"application/json; charset=utf-8\", got %s", val[0])
+	}
+
+	if resp.StatusCode == http.StatusCreated {
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		var todoModel models.Todo
+		err = json.Unmarshal(bodyBytes, &todoModel)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if reflect.TypeOf(todoModel) != reflect.TypeOf(models.Todo{}) {
+			t.Fatalf("Expected %s, got %s", reflect.TypeOf([]models.Todo{}), reflect.TypeOf(todoModel))
+		}
 	}
 }
