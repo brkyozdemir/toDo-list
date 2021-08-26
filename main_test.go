@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/toDo-list/internal/handlers"
 	"github.com/toDo-list/internal/models"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -18,6 +18,11 @@ import (
 func setupGetServer() *gin.Engine {
 	r := gin.Default()
 
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
+
 	r.GET("/todos", handlers.GetTodoList)
 
 	return r
@@ -25,6 +30,11 @@ func setupGetServer() *gin.Engine {
 
 func setupPostServer() *gin.Engine {
 	r := gin.Default()
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
 
 	r.POST("/todo", handlers.CreateTodo)
 
@@ -82,7 +92,7 @@ func TestCreateTodoRoute(t *testing.T) {
 	jsonData, err := json.Marshal(data)
 
 	if err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
 
 	resp, err := http.Post(fmt.Sprintf("%s/todo", ts.URL), "application/json", bytes.NewBuffer(jsonData))
@@ -120,5 +130,20 @@ func TestCreateTodoRoute(t *testing.T) {
 		if reflect.TypeOf(todoModel) != reflect.TypeOf(models.Todo{}) {
 			t.Fatalf("Expected %s, got %s", reflect.TypeOf([]models.Todo{}), reflect.TypeOf(todoModel))
 		}
+	}
+}
+
+func TestCreateTodoRouteWithEmptyBody(t *testing.T) {
+	ts := httptest.NewServer(setupPostServer())
+	defer ts.Close()
+
+	resp, err := http.Post(fmt.Sprintf("%s/todo", ts.URL), "application/json", nil)
+
+	if err != nil {
+		t.Fatalf("Expected no error, got %v", err)
+	}
+
+	if resp.StatusCode != http.StatusBadRequest {
+		t.Fatalf("Expected status code 400, got %v", resp.StatusCode)
 	}
 }
