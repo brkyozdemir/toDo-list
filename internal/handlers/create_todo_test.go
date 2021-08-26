@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"github.com/joho/godotenv"
-	"go_modules/internal/models"
-	"go_modules/internal/utils"
+	"go_modules_todo/internal/models"
+	"go_modules_todo/internal/utils"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go_modules/internal/database"
-	"go_modules/internal/models"
+	"go_modules_todo/internal/database"
+	"go_modules_todo/internal/models"
 )
 
 func main() {
