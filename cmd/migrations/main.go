@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/toDo-list/internal/database"
-	"github.com/toDo-list/internal/models"
+	"go_modules/internal/database"
+	"go_modules/internal/models"
 )
 
 func main() {

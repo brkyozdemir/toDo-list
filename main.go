@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
-	"github.com/toDo-list/internal/handlers"
+	"go_modules/internal/handlers"
 )
 
 func main() {

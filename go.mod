@@ -1,4 +1,4 @@
-module github.com/toDo-list
+module go_modules
 
 go 1.16
 

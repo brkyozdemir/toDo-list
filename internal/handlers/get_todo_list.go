@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/toDo-list/internal/managers"
+	"go_modules/internal/managers"
 	"net/http"
 )
 

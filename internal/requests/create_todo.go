@@ -2,7 +2,7 @@ package requests
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/toDo-list/internal/utils"
+	"go_modules/internal/utils"
 )
 
 type CreateTodoRequest struct {

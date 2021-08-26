@@ -3,9 +3,9 @@ package handlers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/toDo-list/internal/managers"
-	"github.com/toDo-list/internal/requests"
-	"github.com/toDo-list/internal/utils"
+	"go_modules/internal/managers"
+	"go_modules/internal/requests"
+	"go_modules/internal/utils"
 	"net/http"
 )
 
