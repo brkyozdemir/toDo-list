@@ -3,10 +3,12 @@ package utils
 import (
 	"database/sql"
 	"fmt"
+	"github.com/joho/godotenv"
+	"os"
 )
 
 func RefreshDatabase() {
-	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3307)/")
+	db, err := sql.Open("mysql", os.Getenv("DB_CONNECTION"))
 	if err != nil {
 		panic(err)
 	}
@@ -28,7 +30,12 @@ func RefreshDatabase() {
 }
 
 func CreateTestDB() {
-	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3307)/")
+	err := godotenv.Load("../../.env")
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := sql.Open("mysql", os.Getenv("DB_CONNECTION"))
 	if err != nil {
 		panic(err)
 	}
