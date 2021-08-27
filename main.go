@@ -5,6 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"go_modules_todo/internal/handlers"
+	"go_modules_todo/internal/utils"
 )
 
 func main() {
@@ -14,8 +15,8 @@ func main() {
 		panic(err)
 	}
 
-	r.POST("/todo", handlers.CreateTodo)
-	r.GET("/todos", handlers.GetTodoList)
+	r.POST("/todo", handlers.CreateTodo).Use(utils.CORSMiddleware())
+	r.GET("/todos", handlers.GetTodoList).Use(utils.CORSMiddleware())
 
 	err = r.Run()
 	if err != nil {
