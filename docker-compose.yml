@@ -13,7 +13,7 @@ services:
       - "8080:8080"
     restart: unless-stopped
     environment:
-      DB_CONNECTION: "root:pass@tcp(0.0.0.0:3306)/"
+      DB_CONNECTION: "root:pass@tcp(gomysql)/"
       DB_NAME: "local_db"
       TEST_DB_NAME: "test_db"
       DB_OPTIONS: "?charset=utf8mb4&parseTime=True&loc=Local"
@@ -21,6 +21,7 @@ services:
 
     # MYSQL
   mysql:
+    container_name: gomysql
     platform: linux/x86_64
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
