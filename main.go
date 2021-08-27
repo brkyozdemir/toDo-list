@@ -15,8 +15,9 @@ func main() {
 		panic(err)
 	}
 
-	r.POST("/todo", handlers.CreateTodo).Use(utils.CORSMiddleware())
-	r.GET("/todos", handlers.GetTodoList).Use(utils.CORSMiddleware())
+	r.Use(utils.CORSMiddleware())
+	r.POST("/todo", handlers.CreateTodo)
+	r.GET("/todos", handlers.GetTodoList)
 
 	err = r.Run()
 	if err != nil {

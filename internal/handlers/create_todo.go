@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_modules_todo/internal/managers"
 	"go_modules_todo/internal/requests"
@@ -11,7 +10,6 @@ import (
 
 func CreateTodo(c *gin.Context) {
 	createTodoRequest, errorsMap := requests.ValidateCreateTodoRequest(c)
-	fmt.Println(errorsMap)
 	utils.CheckValidationResults(c, errorsMap)
 
 	createdTodo := managers.CreateTodo(createTodoRequest.Description)
